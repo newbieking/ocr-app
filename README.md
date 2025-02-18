@@ -16,19 +16,19 @@
   - `Pillow`：用于处理图片数据。
 
 ## 安装步骤
-1. **克隆项目代码**
+1.**克隆项目代码**
 ```bash
 git clone https://github.com/newbieking/ocr-app.git
 cd ocr-app
-
-## 开始
+````
+## 创建并激活虚拟环境
 ### Windows
 ```ps1
 python -m venv venv
 venv\Scripts\activate
 ```
 ### Linux/Mac
-```ps1
+```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
