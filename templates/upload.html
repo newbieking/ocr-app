@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单上传</title>
+    <style>
+        #loading {
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<form id="uploadForm">
+    <input type="file" name="file">
+    <input type="submit" value="提交">
+</form>
+<div id="loading">处理中，请等待...</div>
+<div id="result"></div>
+
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        // 显示加载提示
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('result').style.display = 'none';
+
+        const formData = new FormData(this);
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 隐藏加载提示
+                document.getElementById('loading').style.display = 'none';
+                // 显示处理结果
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('result').innerHTML = `
+                    <h2>识别文件 ${data.filename} 识别结果:</h2>
+                    <hr/>
+                    <p>${data.result}</p>
+                `;
+            })
+            .catch(error => {
+                // 隐藏加载提示
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').innerHTML = '处理出错: ' + error.message;
+            });
+    });
+</script>
+</body>
+</html>
